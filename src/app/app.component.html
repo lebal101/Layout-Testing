@@ -1,8 +1,8 @@
 <div class="container-fluid mt-3">
-  <mat-expansion-panel hideToggle>
+  <mat-expansion-panel class="mb-2 bg-light" *ngFor="let i of [1,2]" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <div class="bg-primary rounded-pill text-truncate">
+        <div class="p-1 bg-primary text-light rounded-pill text-truncate">
           ABC - DE:FG.HI - JK L:MN.PO
         </div>
       </mat-panel-title>
@@ -15,33 +15,54 @@
         <button class="btn btn-primary">New</button>
       </mat-tab>
       <mat-tab [label]="sets.name">
-        <mat-tab-group color="accent">
-          <mat-tab
-            *ngFor="let set of sets.content | keyvalue"
-            [label]="set.key"
-          >
-            <mat-tab-group>
-              <mat-tab
-                *ngFor="let pos of positions.content | keyvalue"
-                [label]="pos.key"
-              >
-                <table>
-                  <tr *ngFor="let tool of tools">
-                    <td>
-                      <div class="pr-3">{{tool.name}}</div>
-                    </td>
-                    <td>
-                      <ng-container
-                        *ngTemplateOutlet="linkBox, context: {'boxContent': tool.content}"
-                      >
-                      </ng-container>
-                    </td>
-                  </tr>
-                </table>
-              </mat-tab>
-            </mat-tab-group>
-          </mat-tab>
-        </mat-tab-group>
+        <ng-template matTabContent>
+          <mat-tab-group color="accent">
+            <mat-tab
+              *ngFor="let set of sets.content | keyvalue"
+              [label]="set.key"
+            >
+              <ng-template matTabContent>
+                <mat-tab-group>
+                  <mat-tab
+                    *ngFor="let pos of positions.content | keyvalue"
+                    [label]="pos.key"
+                  >
+                    <div>
+                      <div class="d-flex my-2 flex-nowrap">
+                        <mat-icon>
+                          airport_shuttle
+                        </mat-icon>
+                        <mat-icon class="text-muted">
+                          airplanemode_active
+                        </mat-icon>
+                        <mat-icon>
+                          rowing
+                        </mat-icon>
+                        <mat-icon>
+                          wash
+                        </mat-icon>
+                      </div>
+
+                      <table>
+                        <tr *ngFor="let tool of tools">
+                          <td>
+                            <div class="pr-3">{{tool.name}}</div>
+                          </td>
+                          <td>
+                            <ng-container
+                              *ngTemplateOutlet="linkBox, context: {'boxContent': tool.content}"
+                            >
+                            </ng-container>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+        </ng-template>
       </mat-tab>
     </mat-tab-group>
   </mat-expansion-panel>
