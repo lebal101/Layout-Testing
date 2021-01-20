@@ -1,14 +1,57 @@
-<mat-tab-group>
-	<mat-tab label="First">
-		<div class="">
-			<mat-tab-group>
-				<mat-tab label="First"> Content 1 </mat-tab>
-				<mat-tab label="Second"> Content 2 </mat-tab>
-				<mat-tab label="Third"> Content 3 </mat-tab>
-			</mat-tab-group>
-		</div>
+<div class="container-fluid mt-3">
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <div class="bg-primary rounded-pill text-truncate">
+          ABC - DE:FG.HI - JK L:MN.PO
+        </div>
+      </mat-panel-title>
+      <!-- <mat-panel-description>
+        This is a summary of the content
+      </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <mat-tab-group color="primary">
+      <mat-tab label="Products">
+        <button class="btn btn-primary">New</button>
+      </mat-tab>
+      <mat-tab [label]="sets.name">
+        <mat-tab-group color="accent">
+          <mat-tab
+            *ngFor="let set of sets.content | keyvalue"
+            [label]="set.key"
+          >
+            <mat-tab-group>
+              <mat-tab
+                *ngFor="let pos of positions.content | keyvalue"
+                [label]="pos.key"
+              >
+                <table>
+                  <tr *ngFor="let tool of tools">
+                    <td>
+                      <div class="pr-3">{{tool.name}}</div>
+                    </td>
+                    <td>
+                      <ng-container
+                        *ngTemplateOutlet="linkBox, context: {'boxContent': tool.content}"
+                      >
+                      </ng-container>
+                    </td>
+                  </tr>
+                </table>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-expansion-panel>
+</div>
 
-	</mat-tab>
-	<mat-tab label="Second"> Content 2 </mat-tab>
-	<mat-tab label="Third"> Content 3 </mat-tab>
-</mat-tab-group>
+<ng-template #linkBox let-boxContent="boxContent">
+  <div style="cursor: pointer" class="bg-light rounded align-self-center">
+    <mat-icon class="align-middle" color="primary">open_in_browser</mat-icon>
+    <span>
+      {{boxContent}}
+    </span>
+  </div>
+</ng-template>
